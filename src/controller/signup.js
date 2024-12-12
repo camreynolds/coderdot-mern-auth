@@ -3,12 +3,12 @@ const bcrypt = require("bcrypt")
 
 async function createUser(req,res) {
   try{
-    const{name,mail,password} = req.body
+    const{name,email,password} = req.body
     
     const hashedPassword = await bcrypt.hash(password,10)
     const newUser = new User({
       name,
-      mail,
+      email,
       password: hashedPassword,
       role: "customer"
     })
