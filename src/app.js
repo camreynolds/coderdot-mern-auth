@@ -2,6 +2,7 @@ require("dotenv").config()
 const express = require("express")
 const signupRouter = require("./routes/signup")
 const bodyParser = require("body-parser")
+const cors = require("cors")
 
 const app = express()
 // const PORT = process.env.Port || 5000
@@ -9,7 +10,9 @@ const app = express()
 // parse to json
 app.use(bodyParser.json())
 
-// middleware
+// middlewares
+app.use(cors())
+
 app.use((req,res,next)=>{
   console.log(req.path, req.method)
   next()
