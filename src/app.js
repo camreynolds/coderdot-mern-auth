@@ -1,12 +1,14 @@
 require("dotenv").config()
 const express = require("express")
-const signupRouter = require("./routes/signup")
-const loginRouter = require("./routes/login")
+const signupRoute = require("./routes/signup")
+const loginRoute = require("./routes/login")
+const authenticateRoute = require("./routes/authenticated")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 
 // admin script
 const {createAdminAccount} = require("./scripts/admin")
+const { authenticateToken } = require("./utils/authMiddleware")
 
 const app = express()
 // const PORT = process.env.Port || 5000
@@ -26,8 +28,9 @@ app.use((req,res,next)=>{
 createAdminAccount()
 
 // routes
-app.use("/user",signupRouter)
-app.use("/auth",loginRouter)
+app.use("/user",signupRoute)
+app.use("/auth",loginRoute)
+app.use("/api", authenticateRoute)
 
 // server connection
 app.listen(process.env.PORT, ()=>{
